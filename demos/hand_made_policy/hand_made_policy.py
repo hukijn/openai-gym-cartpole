@@ -16,7 +16,7 @@ def choose_action(observation):
     return 0 if ang < 0 else 1 # a simple rule based only on angles
 
 if __name__ == '__main__':
-    env = gym.make('CartPole-v0')
+    env = gym.make('CartPole-v1', render_mode="rgb_array")
 
     for i_episode in range(200):
         observation = env.reset() # reset environment to initial state for each episode

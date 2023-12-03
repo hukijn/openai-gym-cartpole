@@ -98,7 +98,7 @@ class DQN(object):
 
 
 if __name__ == '__main__':
-    env = gym.make('CartPole-v0')
+    env = gym.make('CartPole-v1', render_mode="human")
     env = env.unwrapped # For cheating mode to access values hidden in the environment
 
     # Environment parameters
@@ -122,13 +122,14 @@ if __name__ == '__main__':
     for i_episode in range(n_episodes):
         t = 0 # timestep
         rewards = 0 # accumulate rewards for each episode
-        state = env.reset() # reset environment to initial state for each episode
+        state = env.reset()[0] # reset environment to initial state for each episode
+        #print(state)
         while True:
             env.render()
 
             # Agent takes action
             action = dqn.choose_action(state) # choose an action based on DQN
-            next_state, reward, done, info = env.step(action) # do the action, get the reward
+            next_state, reward, done, info, _ = env.step(action) # do the action, get the reward
 
             # Cheating part: modify the reward to speed up training process
             if CHEAT:

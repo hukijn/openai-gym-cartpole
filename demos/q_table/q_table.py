@@ -28,7 +28,7 @@ def get_state(observation, n_buckets, state_bounds):
     return tuple(state)
 
 if __name__ == '__main__':
-    env = gym.make('CartPole-v0')
+    env = gym.make('CartPole-v1', render_mode="human")
 
     # Preparing Q table
     ## buckets for continuous state values to be assigned to
@@ -56,7 +56,7 @@ if __name__ == '__main__':
         epsilon = get_epsilon(i_episode)
         lr = get_lr(i_episode)
 
-        observation = env.reset() # reset environment to initial state for each episode
+        observation = env.reset()[0] # reset environment to initial state for each episode
         rewards = 0 # accumulate rewards for each episode
         state = get_state(observation, n_buckets, state_bounds) # turn observation into discrete state
         for t in range(250):
@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
             # Agent takes action
             action = choose_action(state, q_table, env.action_space, epsilon) # choose an action based on q_table 
-            observation, reward, done, info = env.step(action) # do the action, get the reward
+            observation, reward, done, info, _ = env.step(action) # do the action, get the reward
             rewards += reward
             next_state = get_state(observation, n_buckets, state_bounds)
 
